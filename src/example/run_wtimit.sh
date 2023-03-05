@@ -27,7 +27,7 @@ if [ $stage -le 1 ]; then
     --checkpoint_path checkpoints/model_${spk_id} \
     --config config.json \
     --training_epochs 2000 \
-    --stdout_interval 1 \
+    --stdout_interval 50 \
     --checkpoint_interval 5000 \
     --summary_interval 100 \
     --validation_interval 1000 \
