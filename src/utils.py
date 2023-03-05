@@ -75,7 +75,7 @@ def mel_spectrogram(
             center=center,
             pad_mode="reflect",
             normalized=False,
-            onesided=True
+            onesided=True,
         )
 
         spec = torch.sqrt(spec.pow(2).sum(-1) + (1e-9))

@@ -30,7 +30,14 @@ def load_checkpoint(filepath, device):
 
 def get_mel(x):
     return mel_spectrogram(
-        x, hyperparams.n_fft, hyperparams.num_mels, hyperparams.sampling_rate, hyperparams.hop_size, hyperparams.win_size, hyperparams.fmin, hyperparams.fmax
+        x,
+        hyperparams.n_fft,
+        hyperparams.num_mels,
+        hyperparams.sampling_rate,
+        hyperparams.hop_size,
+        hyperparams.win_size,
+        hyperparams.fmin,
+        hyperparams.fmax,
     )
 
 
@@ -56,7 +63,9 @@ def inference_from_pickle(cli_args):
         os.path.join(cli_args.input_wavs_dir, f"{cli_args.speaker_id}_audio.pickle")
     )
 
-    logging.info(f"Found {len(filelist)} .wav files in pickle file {cli_args.input_wavs_dir}")
+    logging.info(
+        f"Found {len(filelist)} .wav files in pickle file {cli_args.input_wavs_dir}"
+    )
 
     out_path = os.path.join(cli_args.output_dir, cli_args.speaker_id)
     os.makedirs(out_path, exist_ok=True)
@@ -102,7 +111,9 @@ def inference(cli_args):
 
     audio_path = os.path.join(cli_args.input_wavs_dir, cli_args.speaker_id)
     if cli_args.corpus == "wtimit":
-        audio_path = os.path.join(cli_args.input_wavs_dir, "whisper", cli_args.speaker_id)
+        audio_path = os.path.join(
+            cli_args.input_wavs_dir, "whisper", cli_args.speaker_id
+        )
     filelist = list(Path(audio_path).rglob("*.wav"))
 
     logging.info(f"Found {len(filelist)} .wav files at {audio_path}")

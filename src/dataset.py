@@ -139,7 +139,7 @@ class VCDataset(Dataset):
             assert n_frames > mask_size_A
             mask_start_A = np.random.randint(0, n_frames - mask_size_A)
             mask_A = np.ones_like(data_A_mel)
-            mask_A[:, mask_start_A:mask_start_A + mask_size_A] = 0.0
+            mask_A[:, mask_start_A : mask_start_A + mask_size_A] = 0.0
 
             train_data_A.append(data_A_mel)
             train_data_A_audio.append(data_A_audio)
@@ -171,7 +171,7 @@ class VCDataset(Dataset):
             assert n_frames > mask_size_B
             mask_start_B = np.random.randint(0, n_frames - mask_size_B)
             mask_B = np.ones_like(data_B_mel)
-            mask_B[:, mask_start_B:mask_start_B + mask_size_B] = 0.0
+            mask_B[:, mask_start_B : mask_start_B + mask_size_B] = 0.0
             train_data_B.append(data_B_mel)
             train_data_B_audio.append(data_B_audio)
             train_mask_B.append(mask_B)

@@ -148,10 +148,14 @@ def train(rank, cli_args, hyperparams):
         msd_B2 = DistributedDataParallel(msd_B2, device_ids=[rank]).to(device)
 
     optim_g_A = torch.optim.AdamW(
-        generator_A2B.parameters(), hyperparams.learning_rate, betas=(hyperparams.adam_b1, hyperparams.adam_b2)
+        generator_A2B.parameters(),
+        hyperparams.learning_rate,
+        betas=(hyperparams.adam_b1, hyperparams.adam_b2),
     )
     optim_g_B = torch.optim.AdamW(
-        generator_B2A.parameters(), hyperparams.learning_rate, betas=(hyperparams.adam_b1, hyperparams.adam_b2)
+        generator_B2A.parameters(),
+        hyperparams.learning_rate,
+        betas=(hyperparams.adam_b1, hyperparams.adam_b2),
     )
 
     optim_d_A = torch.optim.AdamW(
@@ -210,7 +214,11 @@ def train(rank, cli_args, hyperparams):
         spk_id = cli_args.speaker_A_id + "_whisper"
 
     dataset_A_audio = load_pickle_file(
-        os.path.join(cli_args.preprocessed_data_dir, spk_id, f"{cli_args.speaker_A_id}_audio.pickle")
+        os.path.join(
+            cli_args.preprocessed_data_dir,
+            spk_id,
+            f"{cli_args.speaker_A_id}_audio.pickle",
+        )
     )
 
     # Initialize dataset of speaker B
@@ -219,7 +227,11 @@ def train(rank, cli_args, hyperparams):
         spk_id = cli_args.speaker_B_id + "_normal"
 
     dataset_B_audio = load_pickle_file(
-        os.path.join(cli_args.preprocessed_data_dir, spk_id, f"{cli_args.speaker_B_id}_audio.pickle")
+        os.path.join(
+            cli_args.preprocessed_data_dir,
+            spk_id,
+            f"{cli_args.speaker_B_id}_audio.pickle",
+        )
     )
 
     trainset = VCDataset(
@@ -552,12 +564,12 @@ def train(rank, cli_args, hyperparams):
 
             # Total Generator loss
             g_loss = (
-                    g_loss_A2B
-                    + g_loss_B2A
-                    + generator_loss_A2B_2nd
-                    + generator_loss_B2A_2nd
-                    + hyperparams.cycle_loss_lambda * cycleLoss
-                    + hyperparams.identity_loss_lambda * identityLoss
+                g_loss_A2B
+                + g_loss_B2A
+                + generator_loss_A2B_2nd
+                + generator_loss_B2A_2nd
+                + hyperparams.cycle_loss_lambda * cycleLoss
+                + hyperparams.identity_loss_lambda * identityLoss
             )
 
             optim_g_A.zero_grad()
@@ -582,7 +594,9 @@ def train(rank, cli_args, hyperparams):
 
                 # Save checkpoints
                 if steps % cli_args.checkpoint_interval == 0 and steps != 0:
-                    checkpoint_path = "{}/ga_{:08d}".format(cli_args.checkpoint_path, steps)
+                    checkpoint_path = "{}/ga_{:08d}".format(
+                        cli_args.checkpoint_path, steps
+                    )
                     save_checkpoint(
                         checkpoint_path,
                         {
@@ -594,7 +608,9 @@ def train(rank, cli_args, hyperparams):
                         },
                     )
 
-                    checkpoint_path = "{}/gb_{:08d}".format(cli_args.checkpoint_path, steps)
+                    checkpoint_path = "{}/gb_{:08d}".format(
+                        cli_args.checkpoint_path, steps
+                    )
                     save_checkpoint(
                         checkpoint_path,
                         {
@@ -606,7 +622,9 @@ def train(rank, cli_args, hyperparams):
                         },
                     )
 
-                    checkpoint_path = "{}/doa_{:08d}".format(cli_args.checkpoint_path, steps)
+                    checkpoint_path = "{}/doa_{:08d}".format(
+                        cli_args.checkpoint_path, steps
+                    )
                     save_checkpoint(
                         checkpoint_path,
                         {
@@ -623,7 +641,9 @@ def train(rank, cli_args, hyperparams):
                         },
                     )
 
-                    checkpoint_path = "{}/dob_{:08d}".format(cli_args.checkpoint_path, steps)
+                    checkpoint_path = "{}/dob_{:08d}".format(
+                        cli_args.checkpoint_path, steps
+                    )
                     save_checkpoint(
                         checkpoint_path,
                         {
@@ -640,7 +660,9 @@ def train(rank, cli_args, hyperparams):
                         },
                     )
 
-                    checkpoint_path = "{}/doa2_{:08d}".format(cli_args.checkpoint_path, steps)
+                    checkpoint_path = "{}/doa2_{:08d}".format(
+                        cli_args.checkpoint_path, steps
+                    )
                     save_checkpoint(
                         checkpoint_path,
                         {
@@ -657,7 +679,9 @@ def train(rank, cli_args, hyperparams):
                         },
                     )
 
-                    checkpoint_path = "{}/dob2_{:08d}".format(cli_args.checkpoint_path, steps)
+                    checkpoint_path = "{}/dob2_{:08d}".format(
+                        cli_args.checkpoint_path, steps
+                    )
                     save_checkpoint(
                         checkpoint_path,
                         {
@@ -700,7 +724,9 @@ def train(rank, cli_args, hyperparams):
                             # Pad generated audio so it matches with target audio
                             try:
                                 y_g_hat_pad = torch.nn.functional.pad(
-                                    y_g_hat, (0, y.size(1) - y_g_hat.size(2)), "constant"
+                                    y_g_hat,
+                                    (0, y.size(1) - y_g_hat.size(2)),
+                                    "constant",
                                 )
                                 y_mel = y_mel.to(device)
                                 y_g_hat_mel = mel_spectrogram(
@@ -715,9 +741,11 @@ def train(rank, cli_args, hyperparams):
                                 )
                                 val_err_tot += F.l1_loss(y_mel, y_g_hat_mel).item()
                             except RuntimeError as e:
-                                logging.error(f"Unable to compute validation error! Variables: x_mel={x_mel.shape} "
-                                              f"y_mel={y_mel.shape} x={x.shape} y={y.shape} "
-                                              f"y_g_hat={y_g_hat.shape} x_g_hat={x_g_hat.shape}")
+                                logging.error(
+                                    f"Unable to compute validation error! Variables: x_mel={x_mel.shape} "
+                                    f"y_mel={y_mel.shape} x={x.shape} y={y.shape} "
+                                    f"y_g_hat={y_g_hat.shape} x_g_hat={x_g_hat.shape}"
+                                )
                                 logging.error(e)
 
                             if j <= 4:
@@ -828,9 +856,7 @@ def main():
         default="wtimit_preprocessed",
         help="Directory containing preprocessed dataset files.",
     )
-    parser.add_argument(
-        "--checkpoint_path", default="checkpoints/exp1"
-    )
+    parser.add_argument("--checkpoint_path", default="checkpoints/exp1")
     parser.add_argument("--corpus", default="wtimit")
     parser.add_argument("--config", default="config.json")
     parser.add_argument("--training_epochs", default=3000, type=int)
