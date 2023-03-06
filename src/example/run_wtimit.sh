@@ -1,6 +1,6 @@
 #!/bin/bash
 
-stage=1
+stage=0
 spk_id=015
 
 cd ../
