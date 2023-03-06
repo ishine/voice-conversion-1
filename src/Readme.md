@@ -83,7 +83,7 @@ python3 -W ignore::FutureWarning train.py \
   --speaker_A_id 015 \
   --speaker_B_id 015 \
   --preprocessed_data_dir wtimit_preprocessed \
-  --checkpoint_path checkpoints/model_${spk_id} \
+  --checkpoint_path checkpoints/model_015 \
   --config config.json
 ```
 

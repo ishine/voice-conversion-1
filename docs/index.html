@@ -3,10 +3,11 @@
 <html lang="en-US">
   <head>
     <meta charset="UTF-8">
-	<title>IS23 Demo</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
-    <link rel="stylesheet" href="style.css">
+	<title>Demo</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -22,11 +23,14 @@
 	<h2 id="abstract"><span style="color:black"><strong>Abstract</strong></span></h2>
 	<div style="text-align: justify"> 
 		Cycle-consistent generative adversarial networks have been widely used in non-parallel voice conversion (VC). 
-		Their ability to learn mappings between source and target features without relying on parallel training data eliminates the need for time alignment procedures. 
+		Their ability to learn mappings between source and target features without relying on parallel training data eliminates the need for temporal alignment. 
 		However, most methods decouple the conversion of acoustic features from synthesizing the audio signal by using separate models for conversion and waveform synthesis. 
-		This work unifies conversion and synthesis into a single model, thereby eliminating the need for a separate vocoder. By leveraging cycle-consistent training and a self-supervised auxiliary training task, our model is able to efficiently generate high quality raw audio waveforms. Our method was designed for whispered to voiced speech conversion but generalizes well to conventional VC tasks. 
-		Objective and subjective evaluations show that our method outperforms in whispered speech conversion experiments and yields competitive results in conventional VC. 
+		This work unifies conversion and synthesis into a single model, thereby eliminating the need for a separate vocoder. 
+		By leveraging cycle-consistent training and a self-supervised auxiliary training task, our model is able to efficiently generate high quality raw audio waveforms. 
+		Our method was designed for whispered to voiced speech conversion but generalizes well to conventional VC tasks. 
+		Objective and subjective evaluations show that our method outperforms in whispered speech conversion and yields competitive results in conventional VC. 
 	<br>
+	<p></p>
 	<p><img src="img/process.png" style="width:800px;" /></p>
 
 	<p>Source code is available at: 
